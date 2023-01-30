@@ -30,7 +30,7 @@ export function useFormInputs() {
     };
   };
 
-  const handleChangeLine = (event) => {
+  const handleChange = (event) => {
     const updatedFormInputs = generateUpdatedFormInputs(formInputs, event);
     setFormInputs(updatedFormInputs);
 
@@ -111,7 +111,7 @@ export function useFormInputs() {
 
   return {
     formInputs,
-    handleChangeLine,
+    handleChange,
     trainInfo,
     lineDisplay,
   };

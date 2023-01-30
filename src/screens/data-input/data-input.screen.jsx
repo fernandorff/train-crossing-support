@@ -2,8 +2,7 @@ import { Styled } from "./data-input.style";
 import { useFormInputs } from "./../../hooks/useFormInputs.hook";
 
 export function DataInput() {
-  const { formInputs, handleChangeLine, trainInfo, lineDisplay } =
-    useFormInputs();
+  const { formInputs, handleChange, trainInfo, lineDisplay } = useFormInputs();
 
   console.log(trainInfo);
 
@@ -23,7 +22,7 @@ export function DataInput() {
               name="lineSize"
               autoComplete="off"
               value={formInputs.lineSize.value}
-              onChange={handleChangeLine}
+              onChange={handleChange}
               placeholder={0}
             />
           </div>
@@ -34,7 +33,7 @@ export function DataInput() {
               name="loopSize"
               autoComplete="off"
               value={formInputs.loopSize.value}
-              onChange={handleChangeLine}
+              onChange={handleChange}
               placeholder={0}
             />
           </div>
@@ -45,7 +44,7 @@ export function DataInput() {
               name="loopPosition"
               autoComplete="off"
               value={formInputs.loopPosition.value}
-              onChange={handleChangeLine}
+              onChange={handleChange}
               placeholder={0}
             />
           </div>
@@ -59,7 +58,7 @@ export function DataInput() {
               name="trainSize1"
               autoComplete="off"
               value={formInputs.trainSize1.value}
-              onChange={handleChangeLine}
+              onChange={handleChange}
               placeholder={0}
             />
           </div>
@@ -70,7 +69,7 @@ export function DataInput() {
               name="trainPosition1"
               autoComplete="off"
               value={formInputs.trainPosition1.value}
-              onChange={handleChangeLine}
+              onChange={handleChange}
               placeholder={0}
             />
           </div>
@@ -84,7 +83,7 @@ export function DataInput() {
               name="trainSize2"
               autoComplete="off"
               value={formInputs.trainSize2.value}
-              onChange={handleChangeLine}
+              onChange={handleChange}
               placeholder={0}
             />
           </div>
@@ -95,7 +94,7 @@ export function DataInput() {
               name="trainPosition2"
               autoComplete="off"
               value={formInputs.trainPosition2.value}
-              onChange={handleChangeLine}
+              onChange={handleChange}
               placeholder={0}
             />
           </div>
@@ -106,13 +105,16 @@ export function DataInput() {
         </form>
       </aside>
       <main>
-        <h1>LISTA DE TAREFAS</h1>
-        <hr />
-        <h3>Status</h3>
+        <h1>Railway Preview</h1>
         <br />
-        <p>{lineDisplay.loopLine}</p>
-        <p>{lineDisplay.verticalLine}</p>
-        <p>{lineDisplay.mainLine}</p>
+        <div className="railway-preview">
+          <p>.{lineDisplay.loopLine}.</p>
+          <p>.{lineDisplay.verticalLine}.</p>
+          <p>.{lineDisplay.mainLine}.</p>
+        </div>
+
+        <hr />
+        <h1>TASK LIST</h1>
       </main>
     </Styled>
   );

@@ -25,6 +25,12 @@ export const Styled = styled.div`
     font-size: 16px;
   }
 
+  .railway-preview {
+    padding: 30px 20px;
+    margin: 30px 0;
+    background-color: #00000010;
+  }
+
   .red {
     color: red;
   }
