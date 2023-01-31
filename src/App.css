@@ -3,10 +3,10 @@
 @font-face {
     font-family: 'FiraCode_Regular';
     src: url('./assets/fonts/FiraCode-Regular.woff2') format('woff2'),
-      url('./assets/fonts/FiraCode-Regular.woff') format('woff');
+        url('./assets/fonts/FiraCode-Regular.woff') format('woff');
     font-weight: normal;
     font-style: normal;
-  }
+}
 
 * {
     font-family: 'Montserrat', sans-serif;
@@ -32,7 +32,7 @@ ul {
 
 ol,
 ul {
-    list-style: none;
+    /* list-style: none; */
 }
 
 img {

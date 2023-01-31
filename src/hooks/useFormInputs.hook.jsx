@@ -20,47 +20,63 @@ export function useFormInputs() {
     mainLine: [],
     verticalLine: [],
     loopLine: [],
+    counterLine: [],
   });
 
-  const generateUpdatedFormInputs = (prevFormInputs, event) => {
+  function generateUpdatedFormInputs(prevFormInputs, event) {
     const { name, value } = event.target;
     return {
       ...prevFormInputs,
       [name]: parseInt(value),
     };
-  };
+  }
 
-  const handleChange = (event) => {
-    const updatedFormInputs = generateUpdatedFormInputs(formInputs, event);
-    setFormInputs(updatedFormInputs);
-
-    let mainLine = [...Array(updatedFormInputs.lineSize)].map(() => ":══:");
-    let verticalLine = [...Array(updatedFormInputs.lineSize)].map(() => "....");
-    let loopLine = [...Array(updatedFormInputs.lineSize)].map(() => "....");
-
+  function generateRailwayDisplay(
+    updatedFormInputs,
+    mainLine,
+    verticalLine,
+    loopLine,
+    counterLine,
+    train1Cars,
+    train2Cars
+  ) {
     for (let index = 1; index <= updatedFormInputs.lineSize; index++) {
       if (index + 1 === updatedFormInputs.loopPosition) {
         verticalLine[index - 1] = " ║║ ";
-        mainLine[index - 1] = ":╝╝:";
+        mainLine[index - 1] = "══╝:";
         loopLine[index - 1] = " ╔╔:";
       } else if (
         index ===
         updatedFormInputs.loopPosition + updatedFormInputs.loopSize
       ) {
         verticalLine[index - 1] = " ║║ ";
-        mainLine[index - 1] = ":╚╚:";
-        loopLine[index - 1] = ":╗╗ ";
+        mainLine[index - 1] = "═╚═:";
+        loopLine[index - 1] = "═╗╗ ";
       } else if (
         index >= updatedFormInputs.loopPosition &&
         index <= updatedFormInputs.loopPosition + updatedFormInputs.loopSize
       ) {
-        loopLine[index - 1] = ":══:";
+        loopLine[index - 1] = "═══:";
       }
+      index > 9
+        ? (counterLine[index] = `.${index}.`)
+        : (counterLine[index] = `.0${index}.`);
     }
 
-    const train1Cars = [];
-    const train2Cars = [];
+    train1Cars.forEach((train) => {
+      if (train.carPosition > 0) {
+        mainLine[train.carPosition - 1] = train.id;
+      }
+    });
 
+    train2Cars.forEach((train) => {
+      if (train.carPosition > 0) {
+        mainLine[train.carPosition - 1] = train.id;
+      }
+    });
+  }
+
+  function generateTrainCars(updatedFormInputs, train1Cars, train2Cars) {
     for (let i = updatedFormInputs.trainSize1 - 1; i >= 0; i--) {
       let id = i < 10 ? `[0${i}]` : `[${i}]`;
       if (i === 0) id = "[L1]";
@@ -84,18 +100,31 @@ export function useFormInputs() {
         carPosition: updatedFormInputs.trainPosition2 + i,
       });
     }
+  }
 
-    train1Cars.forEach((train) => {
-      if (train.carPosition > 0) {
-        mainLine[train.carPosition - 1] = train.id;
-      }
-    });
+  function handleChange(event) {
+    const updatedFormInputs = generateUpdatedFormInputs(formInputs, event);
+    setFormInputs(updatedFormInputs);
 
-    train2Cars.forEach((train) => {
-      if (train.carPosition > 0) {
-        mainLine[train.carPosition - 1] = train.id;
-      }
-    });
+    let mainLine = [...Array(updatedFormInputs.lineSize)].map(() => "═══:");
+    let verticalLine = [...Array(updatedFormInputs.lineSize)].map(() => ".'.'");
+    let loopLine = [...Array(updatedFormInputs.lineSize)].map(() => ".'.'");
+    let counterLine = [...Array(updatedFormInputs.lineSize)].map(() => "");
+
+    const train1Cars = [];
+    const train2Cars = [];
+
+    generateTrainCars(updatedFormInputs, train1Cars, train2Cars);
+
+    generateRailwayDisplay(
+      updatedFormInputs,
+      mainLine,
+      verticalLine,
+      loopLine,
+      counterLine,
+      train1Cars,
+      train2Cars
+    );
 
     setTrainInfo({
       train1: train1Cars,
@@ -106,14 +135,17 @@ export function useFormInputs() {
       mainLine,
       verticalLine,
       loopLine,
+      counterLine,
     });
-  };
+  }
 
   return {
     formInputs,
     handleChange,
     trainInfo,
     lineDisplay,
+    generateRailwayDisplay,
+    generateUpdatedFormInputs,
   };
 }
 

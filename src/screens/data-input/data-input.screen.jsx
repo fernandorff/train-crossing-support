@@ -1,10 +1,23 @@
 import { Styled } from "./data-input.style";
 import { useFormInputs } from "./../../hooks/useFormInputs.hook";
+import useGenerateTasks from "../../hooks/useGenerateTasks.hook";
 
 export function DataInput() {
   const { formInputs, handleChange, trainInfo, lineDisplay } = useFormInputs();
+  const { taskList, generateTasks, railwayTaskDisplay } = useGenerateTasks();
 
-  console.log(trainInfo);
+  // console.log(trainInfo);
+  // console.log(lineDisplay);
+
+  function renderInstructions(taskList) {
+    return taskList.map((task) => (
+      <li>
+        <p>{task}</p>
+      </li>
+    ));
+  }
+
+  // console.log(railwayTaskDisplay);
 
   return (
     <Styled>
@@ -100,21 +113,48 @@ export function DataInput() {
           </div>
 
           <hr />
-
-          <button>CALCULATE</button>
         </form>
+        <button onClick={() => generateTasks(trainInfo, formInputs)}>
+          CALCULATE
+        </button>
       </aside>
       <main>
         <h1>Railway Preview</h1>
         <br />
         <div className="railway-preview">
-          <p>.{lineDisplay.loopLine}.</p>
-          <p>.{lineDisplay.verticalLine}.</p>
-          <p>.{lineDisplay.mainLine}.</p>
+          <p>'{lineDisplay.loopLine}.</p>
+          <p>'{lineDisplay.verticalLine}.</p>
+          <p>'{lineDisplay.mainLine}.</p>
+          <p>'</p>
+          <p>'{lineDisplay.counterLine}.</p>
         </div>
+        <p className="subtitle">{`==: => Rail | [ ] => Train 1 Car  | { } => Train 2 Car | L => Loco | T => Train`}</p>
 
         <hr />
         <h1>TASK LIST</h1>
+
+        <div className="railway-task-display">
+          {railwayTaskDisplay.map((item, index) => {
+            if (
+              item.C_mainLine &&
+              item.B_verticalLine &&
+              item.A_loopLine &&
+              item.D_counterLine
+            ) {
+              return (
+                <div className="railway-preview" key={index}>
+                  <p>{item.A_loopLine}</p>
+                  <p>{item.B_verticalLine}</p>
+                  <p>{item.C_mainLine}</p>
+                  <p>{item.D_counterLine}</p>
+                </div>
+              );
+            }
+            return null;
+          })}
+        </div>
+
+        <ol>{renderInstructions(taskList)}</ol>
       </main>
     </Styled>
   );

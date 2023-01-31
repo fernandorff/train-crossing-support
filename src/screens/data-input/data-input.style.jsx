@@ -20,9 +20,15 @@ export const Styled = styled.div`
     font-weight: bold;
   }
 
-  main p {
+  .railway-preview p {
     font-family: "FiraCode_Regular", monospace;
-    font-size: 16px;
+    font-size: 10px;
+  }
+
+  .subtitle {
+    font-family: "FiraCode_Regular", monospace;
+    font-size: 12px;
+    margin-bottom: 20px;
   }
 
   .railway-preview {
@@ -31,8 +37,8 @@ export const Styled = styled.div`
     background-color: #00000010;
   }
 
-  .red {
-    color: red;
+  main li {
+    margin: 10px 0;
   }
 
   aside {
@@ -99,7 +105,12 @@ export const Styled = styled.div`
     font-size: 14px;
     font-weight: 600;
     min-height: 40px;
-    padding: 5px 10px;
+    padding: 5px 0 5px 10px;
+  }
+
+  input[type="number"]::-webkit-inner-spin-button {
+    width: 60px;
+    height: 40px;
   }
 
   button {
